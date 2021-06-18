@@ -5,14 +5,11 @@
         <div class="col">
             <a href="#!" class="btn btn-sm btn-warning btn-refresh">Refresh</a>
         </div>
-        <div class="col text-right">
-            <a href="#!" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Data </a>
-        </div>
     </div>
 </div>
 <div class="table-responsive">
     <!-- Projects table -->
-    <table class="table align-items-center table-flush">
+    <table class="table align-items-center table-flush mytable">
         <!-- Tabel -->
         <thead>
             <tr>
@@ -46,7 +43,7 @@
                 <td>
 
                     @if($dt->status=='pinjam')
-                    <a href="{{url('/pengembalian/kembali/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat">Kembali</a>
+                    <a href="{{url('/pengembalian/kembali/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat">Kembalikan</a>
                     @endif
                 </td>
                 @endif

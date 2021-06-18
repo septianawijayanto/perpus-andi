@@ -12,7 +12,7 @@
 </div>
 <div class="table-responsive">
     <!-- Projects table -->
-    <table class="table align-items-center table-flush">
+    <table class="table align-items-center table-flush mytable">
         <!-- Tabel -->
         <thead>
             <tr>

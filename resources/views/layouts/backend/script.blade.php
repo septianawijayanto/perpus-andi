@@ -13,12 +13,18 @@
 
 <script type="text/javascript" src="{{asset('js/handlebars.js')}}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
+<script type="text/javascript" src="{{asset('DataTables/datatables.min.js')}}"></script>
 
 
 
 <script type="text/javascript">
+  // $(document).ready(function() {
+  //   $(".preloader").fadeOut();
+  // })
   $(document).ready(function() {
     $(".preloader").fadeOut();
+
+    $('.mytable').DataTable()
   })
 </script>
 

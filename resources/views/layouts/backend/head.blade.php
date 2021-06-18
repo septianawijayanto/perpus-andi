@@ -13,3 +13,4 @@
 <!-- Page plugins -->
 <!-- Argon CSS -->
 <link rel="stylesheet" href="{{asset('admin/')}}/assets/css/argon.css?v=1.2.0" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{asset('DataTables/datatables.min.css')}}" />

@@ -59,7 +59,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{url('transaksi')}}">
                             <i class="ni ni-bullet-list-67 text-primary"></i>
-                            <span class="nav-link-text">Transaksi</span>
+                            <span class="nav-link-text">Peminjaman</span>
                         </a>
                     </li>
                 </ul>
