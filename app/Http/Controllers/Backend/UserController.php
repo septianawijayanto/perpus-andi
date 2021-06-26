@@ -12,7 +12,7 @@ class UserController extends Controller
     public function index()
     {
         $data = User::all();
-        $title = 'Data User';
+        $title = 'Data Admin';
         return view('user.index', compact('title', 'data'));
     }
     public function create(Request $request)
@@ -57,7 +57,7 @@ class UserController extends Controller
     }
     public function edit($id)
     {
-        $title = 'Edit User';
+        $title = 'Edit Admin';
 
         $data = User::find($id);
         return view('user.edit', compact('data', 'title'));
@@ -84,6 +84,6 @@ class UserController extends Controller
         $data['updated_at'] = date('Y-m-d H:i:s', strtotime(Carbon::today()->toDateString()));
 
         User::where('id', $id)->update($data);
-        return redirect('user')->with('sukses', 'User Berhasil Diedit');
+        return redirect('user')->with('sukses', 'Data Berhasil Diedit');
     }
 }

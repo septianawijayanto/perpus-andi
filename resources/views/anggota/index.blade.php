@@ -16,11 +16,11 @@
         <thead>
             <tr>
                 <th>No</th>
-                <th>Kode Anggota</th>
+                <th>Kode</th>
                 <th>Nama</th>
                 <th>Jenis</th>
                 <th>Tempat Lahir</th>
-                <th>Tanggal Lahir</th>
+                <th>Tgl Lahir</th>
                 <th>No Hp</th>
                 <th>Alamat</th>
                 <th>Aksi</th>
@@ -40,6 +40,8 @@
                 <td>
                     <a href="{{url('/anggota/edit/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Edit</a>
                     <a href="{{url('/anggota/delete/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat" onclick="return confirm ('Apakah Akan Anda Hapus?')">Hapus</a>
+                    <a href="{{url('/anggota/cetak/'.$dt->id)}}" class="btn btn-warning btn-sm btn-flat">Cetak</a>
+
                 </td>
             </tr>
             @endforeach

@@ -37,7 +37,7 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{url('user')}}">
                             <i class="ni ni-single-02 text-red"></i>
-                            <span class="nav-link-text">User</span>
+                            <span class="nav-link-text">Admin</span>
                         </a>
                     </li>
                 </ul>

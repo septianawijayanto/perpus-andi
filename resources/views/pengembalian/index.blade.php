@@ -43,7 +43,12 @@
                 <td>
 
                     @if($dt->status=='pinjam')
-                    <a href="{{url('/pengembalian/kembali/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat">Kembalikan</a>
+                    <a href="{{url('/pengembalian/kembali/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Kembalikan</a>
+                    @if($dt->anggota->jenis_anggota=='siswa')
+                    <button data-toggle="modal" data-target="#modalrusak-{{$dt->id}}" class="btn btn-danger btn-sm " class="fa fa-check">Rusak</button>
+                    <!-- <a href="{{ url('/pinjam/hilang/'.$dt->id) }}" class="btn btn-warning btn-xs " class="fa fa-check">Hilang</a> -->
+                    <button data-toggle="modal" data-target="#modalhilang-{{ $dt->id }}" class="btn btn-warning btn-sm " class="fa fa-check">Hilang</button>
+                    @endif
                     @endif
                 </td>
                 @endif
@@ -53,7 +58,76 @@
         <!-- Tabel End -->
     </table>
 </div>
-
+<!-- Modal Hilang-->
+@foreach($data as $hilang)
+<div class="modal fade" id="modalhilang-{{ $hilang->id }}" tabindex=" -1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Tambah Pinjaman</h5>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url('/pengembalian/hilang/'.$hilang->id) }}" method="POST" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <div class="form-group {{$errors->has('denda') ? 'has-error' :''}}">
+                        <label for="exampleFormControlInput1">Denda Sebelumnya</label>
+                        <input name="denda" type="text" class="form-control" readonly id="inputdhs" placeholder="Denda Sebelumnya" value="{{$hilang->denda}}">
+                        @if($errors->has('denda'))
+                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('denda')}}</span>
+                        @endif
+                    </div>
+                    <div class="form-group {{$errors->has('denda') ? 'has-error' :''}}">
+                        <label for="exampleFormControlInput1">Denda Hilang</label>
+                        <input name="denda" type="text" class="form-control" id="inputdh" placeholder="Input Judul Buku" value="">
+                        @if($errors->has('denda'))
+                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('denda')}}</span>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas  fa-power-off"></i> Tutup</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+<!-- Modal Rusak-->
+@foreach($data as $rusak)
+<div class="modal fade" id="modalrusak-{{ $rusak->id }}" tabindex=" -1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Rusak</h5>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url('/pengembalian/rusak/'.$rusak->id) }}" method="POST" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <div class="form-group {{$errors->has('denda') ? 'has-error' :''}}">
+                        <label for="exampleFormControlInput1">Denda Sebelumnya</label>
+                        <input name="denda" type="text" class="form-control" id="inputds" readonly placeholder="Denda Sebelumnya" value="{{$rusak->denda}}">
+                        @if($errors->has('denda'))
+                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('denda')}}</span>
+                        @endif
+                    </div>
+                    <div class="form-group {{$errors->has('denda') ? 'has-error' :''}}">
+                        <label for="exampleFormControlInput1">Denda Rusak</label>
+                        <input name="denda" type="text" class="form-control" id="inputdr" placeholder="Denda Rusak" value="">
+                        @if($errors->has('denda'))
+                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('denda')}}</span>
+                        @endif
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas  fa-power-off"></i> Tutup</button>
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection
 @section('scripts')
 

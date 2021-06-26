@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransaksiTable extends Migration
+class CreateDendaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateTransaksiTable extends Migration
      */
     public function up()
     {
-        Schema::create('transaksi', function (Blueprint $table) {
+        Schema::create('denda', function (Blueprint $table) {
             $table->id();
             $table->string('kode_transaksi');
             $table->foreignId('anggota_id')->references('id')->on('anggota')->onDelete('cascade');
             $table->foreignId('buku_id')->references('id')->on('buku')->onDelete('cascade');
-            $table->date('tgl_pinjam');
-            $table->date('tgl_kembali');
-            $table->enum('status', ['pinjam', 'kembali', 'hilang', 'rusak']);
-            $table->string('status_denda')->nullable();
+            $table->string('status');
+            // $table->string('status_denda')->nullable();
             $table->string('denda')->nullable();
             $table->timestamps();
         });
@@ -34,6 +32,6 @@ class CreateTransaksiTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transaksi');
+        Schema::dropIfExists('denda');
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Anggota;
 use App\User;
+use PDF;
 use Carbon\Carbon;
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -112,5 +113,12 @@ class AnggotaController extends Controller
 
         Anggota::where('id', $id)->update($data);
         return redirect('anggota')->with('sukses', 'Anggota Berhasil Diedit');
+    }
+    public function cetak($id)
+    {
+        $tgl = date('d F Y');
+        $data = Anggota::find($id);
+        $pdf = PDF::loadview('anggota.kartu', compact('data', 'tgl'))->setPaper('a5', 'landscape');
+        return $pdf->stream('Kartu ' . $data->nama . ' ' . date('Y-m-d_H:i:s') . '.pdf');
     }
 }

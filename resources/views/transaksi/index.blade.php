@@ -83,7 +83,7 @@
                         <select name="anggota_id" class="form-control" id="exampleFormControlSelect1">
                             <option value="">-Pilih-</option>
                             @foreach ($anggota as $ang)
-                            <option value="{{$ang->id}}">{{$ang->nama}}</option>
+                            <option value="{{$ang->id}}">{{$ang->nama}} ({{$ang->jenis_anggota}})</option>
                             @endforeach
                         </select>
                         @if($errors->has('anggota_id'))

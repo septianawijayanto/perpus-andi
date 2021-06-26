@@ -125,6 +125,8 @@
                 <td>Jumlah Buku</td>
                 <td>Sumber</td>
                 <td>Jumlah Dipinjam</td>
+                <td>Rusak</td>
+                <td>Hilang</td>
             </tr>
         </thead>
 
@@ -141,11 +143,13 @@
                 <td>{{$dt->jml_buku}}</td>
                 <td>{{$dt->sumber}}</td>
                 <td>{{$dt->jml_dipinjam}}</td>
+                <td>{{$dt->rusak}}</td>
+                <td>{{$dt->hilang}}</td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    <p class="right">Kuala Tungkal, {{$tgl}}</p>
+    <p class="right">Muaro Jambi, {{$tgl}}</p>
 
     <br>
     <p class="right">Admin</p>

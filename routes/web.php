@@ -47,6 +47,7 @@ Route::group(['middleware' => ['auth', 'chekRole:admin']], function () {
     route::get('/anggota/edit/{id}', 'Backend\AnggotaController@edit');
     route::post('/anggota/update/{id}', 'Backend\AnggotaController@update');
     route::get('/anggota/delete/{id}', 'Backend\AnggotaController@delete');
+    route::get('/anggota/cetak/{id}', 'Backend\AnggotaController@cetak');
 
     //user
     route::get('/user', 'Backend\UserController@index');
@@ -71,6 +72,8 @@ Route::group(['middleware' => ['auth', 'chekRole:admin']], function () {
 
     //pengembalian
     route::get('pengembalian/kembali/{id}', 'Backend\PengembalianController@kembalikan');
+    Route::match(['get', 'post'], 'pengembalian/rusak/{id}', 'Backend\PengembalianController@rusak');
+    Route::match(['get', 'post'], 'pengembalian/hilang/{id}', 'Backend\PengembalianController@hilang');
 
     //denda
 

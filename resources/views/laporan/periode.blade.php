@@ -144,7 +144,7 @@
             @endforeach
         </tbody>
     </table>
-    <p class="right">Kuala Tungkal, {{$tgl}}</p>
+    <p class="right">Muaro Jambi, {{$tgl}}</p>
 
     <br>
     <p class="right">Admin</p>
