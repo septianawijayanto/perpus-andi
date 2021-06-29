@@ -1,4 +1,4 @@
-@extends('layouts.backend.master')
+@extends('layouts.anggota.master')
 @section('konten')
 <div class="card-header border-0">
     <div class="row align-items-center">
@@ -6,7 +6,7 @@
             <a href="#!" class="btn btn-sm btn-warning btn-refresh">Refresh</a>
         </div>
         <div class="col text-right">
-            <a href="#!" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Data </a>
+            <a href="#!" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Peminjaman </a>
         </div>
     </div>
 </div>
@@ -22,14 +22,10 @@
                 <th>Peminjam</th>
                 <th>Tgl Pinjam</th>
                 <th>Tgl Kembali</th>
-                <th>Status</th>
                 <th>Denda</th>
-                @if(Auth::user()->role=='admin')
-                <th>Aksi</th>
-                @endif
+                <th>Status</th>
             </tr>
         </thead>
-
         <tbody>
             @foreach ($data as $e=>$dt)
 
@@ -40,18 +36,28 @@
                 <td>{{$dt->anggota->nama}}</td>
                 <td>{{$dt->tgl_pinjam}}</td>
                 <td>{{$dt->tgl_kembali}}</td>
-                <td>{{$dt->status}}</td>
-                <td>Rp. {{number_format($dt->denda)}}</td>
-                @if(Auth::user()->role=='admin')
                 <td>
-                    @if($dt->status=='proses')
-                    <a href="{{url('/transaksi/setujui/'.$dt->id)}}" class="btn btn-primary btn-sm btn-flat">Setujui</a>
-                    <a href="{{url('/transaksi/tolak/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat">Tolak</a>
-                    @elseif($dt->status=='pinjam')
-                    <a href="{{url('/transaksi/perpanjang/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Perpanjang</a>
+                    @if($dt->status_denda=='belum lunas')
+                    <span class="badge badge-warning">Rp. {{number_format($dt->denda)}} (BL) </span>
+                    @elseif($dt->status_denda=='lunas')
+                    <span class="badge badge-success">Rp. {{number_format($dt->denda)}} (L)</span>
+                    @else
+                    <span class="badge badge-success">Rp. {{number_format($dt->denda)}}</span>
                     @endif
                 </td>
-                @endif
+                <td>
+                    @if($dt->status=='proses')
+                    <span class="badge badge-info">Proses</span>
+                    @elseif($dt->status=='pinjam')
+                    <span class="badge badge-primary">Dipinjam</span>
+                    @elseif($dt->status=='kembali')
+                    <span class="badge badge-success">Kembali</span>
+                    @elseif($dt->status=='rusak')
+                    <span class="badge badge-danger">Rusak</span>
+                    @elseif($dt->status=='hilang')
+                    <span class="badge badge-warning">Kembali</span>
+                    @endif
+                </td>
             </tr>
             @endforeach
         </tbody>
@@ -68,7 +74,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('transaksi/create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('anggota/transaksi/create') }}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-group {{$errors->has('kode_transaksi') ? 'has-error' :''}}">
                         <label for="exampleFormControlInput1">Kode Transaksi</label>
@@ -77,34 +83,6 @@
                         <span class="right badge badge-danger" class=" help-block">{{$errors->first('nisn')}}</span>
                         @endif
                     </div>
-                    @if(Auth::user()->role=='admin')
-                    <div class="form-group {{$errors->has('anggota_id') ? 'has-error' :''}}">
-                        <label for="exampleFormControlSelect1">Nama</label>
-                        <select name="anggota_id" class="form-control" id="exampleFormControlSelect1">
-                            <option value="">-Pilih-</option>
-                            @foreach ($anggota as $ang)
-                            <option value="{{$ang->id}}">{{$ang->nama}} ({{$ang->jenis_anggota}})</option>
-                            @endforeach
-                        </select>
-                        @if($errors->has('anggota_id'))
-                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('anggota_id')}}</span>
-                        @endif
-                    </div>
-                    @else
-                    <div class="form-group {{$errors->has('anggota_id') ? 'has-error' :''}}">
-                        <label for="exampleFormControlSelect1">Nama</label>
-                        <select name="anggota_id" class="form-control" id="exampleFormControlSelect1">
-                            @foreach ($anggota as $ang)
-                            @if($ang->user_id==Auth::user()->id)
-                            <option value="{{$ang->id}}">{{$ang->user->name}}</option>
-                            @endif
-                            @endforeach
-                        </select>
-                        @if($errors->has('anggota_id'))
-                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('anggota_id')}}</span>
-                        @endif
-                    </div>
-                    @endif
                     <div class="form-group {{$errors->has('buku_id') ? 'has-error' :''}}">
                         <label for="exampleFormControlSelect1">Judul Buku</label>
                         <select name="buku_id" class="form-control" id="exampleFormControlSelect1">
@@ -126,7 +104,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 @section('scripts')
 

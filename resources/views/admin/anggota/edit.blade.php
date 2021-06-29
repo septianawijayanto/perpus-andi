@@ -11,13 +11,20 @@
     <div class="col-md-12">
         <div class="card-body">
             <!-- Konten -->
-            <form action="{{ url('/anggota/update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('admin/anggota/update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="form-group {{$errors->has('nama') ? 'has-error' :''}}">
                     <label for="exampleFormControlInput1">Nama</label>
                     <input name="nama" type="text" class="form-control" id="inputnama" placeholder="Input nama" value="{{$data->nama}}">
                     @if($errors->has('nama'))
                     <span class="right badge badge-danger" class=" help-block">{{$errors->first('nama')}}</span>
+                    @endif
+                </div>
+                <div class="form-group {{$errors->has('username') ? 'has-error' :''}}">
+                    <label for="exampleFormControlInput1">Username</label>
+                    <input name="username" type="text" class="form-control" id="inputusername" placeholder="Input Username" value="{{$data->username}}">
+                    @if($errors->has('username'))
+                    <span class="right badge badge-danger" class=" help-block">{{$errors->first('username')}}</span>
                     @endif
                 </div>
                 <div class="form-group {{$errors->has('jenis_anggota') ? 'has-error' :''}}">

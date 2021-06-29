@@ -27,8 +27,7 @@
     <link rel="stylesheet" href="{{asset('admin')}}/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">
     <!-- Argon CSS -->
     <link rel="stylesheet" href="{{asset('admin')}}/assets/css/argon.css?v=1.2.0" type="text/css">
-    <!-- Toastr -->
-    <link rel="stylesheet" href="{{asset('adminlte')}}/plugins/toastr/toastr.min.css">
+
 
 </head>
 
@@ -61,50 +60,55 @@
                 <div class="col-lg-5 col-md-7">
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form" method="POST" action="{{ route('login') }}">
-                                {{ csrf_field() }}
-                                <div class="form-group mb-2">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                            <div class="card-body px-lg-5 py-lg-5">
+                                <form role="form" method="POST" action="{{url('post/login')}}">
+                                    {{ csrf_field() }}
+                                    <div class="form-group mb-2">
+                                        <div class="input-group input-group-merge input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-single-02"></i></span>
+                                            </div>
+                                            <input name="username" class="form-control" autocomplete="" required placeholder="Username" type="text" value="{{ old('username') }}">
                                         </div>
-                                        <input name="email" class="form-control" autocomplete="" placeholder="Email" type="email" value="{{ old('email') }}">
                                     </div>
-                                    @if ($errors->has('email'))
-                                    <span class="right badge badge-danger" class=" help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="form-group mb-2">
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                    <div class="form-group mb-2">
+                                        <div class="input-group input-group-merge input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                            </div>
+                                            <input id="password" type="password" placeholder="Password" required class="form-control password" name="password" value="{{ old('password') }}">
+                                            <!-- required autocomplete="new-password" -->
+
                                         </div>
-                                        <input id="password" type="password" placeholder="Password" class="form-control password" name="password" value="{{ old('password') }}">
-                                        <!-- required autocomplete="new-password" -->
-
                                     </div>
-                                    @if ($errors->has('password'))
-                                    <span class="right badge badge-danger" class=" help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                    <label class="custom-control-label" for=" customCheckLogin">
-                                        <span class="text-muted">Tampilkan Password</span>
-                                    </label>
-                                </div>
+                                    <div class="form-group mb-2">
+                                        <div class="input-group input-group-merge input-group-alternative">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
+                                            </div>
+                                            <select name="masuk_sebagai" class="form-control" id="masuk_sebagai" required>
+                                                <option value="">-Login Sebagai-</option>
+                                                <option value="admin">Admin</option>
+                                                <option value="anggota">Anggota</option>
+                                            </select>
+                                        </div>
+                                    </div>
 
-                                <!-- /.col -->
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-primary my-4"> Masuk <i class="fas fa-sign-in-alt"></i></button>
-                                </div>
-                                <!-- /.col -->
+                                    <div class="custom-control custom-control-alternative custom-checkbox">
+                                        <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
+                                        <label class="custom-control-label" for=" customCheckLogin">
+                                            <span class="text-muted">Tampilkan Password</span>
+                                        </label>
+                                    </div>
 
-                            </form>
+                                    <!-- /.col -->
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary my-4"> Masuk <i class="fas fa-sign-in-alt"></i></button>
+                                    </div>
+                                    <!-- /.col -->
+
+                                </form>
+                            </div>
                         </div>
                     </div>
                     <div class="row mt-3">
@@ -160,7 +164,7 @@
     <!-- Argon JS -->
     <script src="{{asset('admin')}}/assets/js/argon.js?v=1.2.0"></script>
 
-    <script src="{{asset('adminlte')}}/plugins/toastr/toastr.min.js"></script>
+    <script src="{{ asset('js/sweetalert.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('.custom-control-input').click(function() {
@@ -172,16 +176,34 @@
             });
         });
         $(document).ready(function() {
-            $("#search").keyup(function() {
-                var str = $("#search").val();
-                if (str == "") {
-                    $("#mydata").html("<b> search again..</b>");
-                } else {
-                    $.get("{{ url('/buku/search?id=') }}" + str, function(data) {
-                        $("#mydata").html(data);
-                    });
-                }
-            });
+            // $('.sidebar').click(function(e){
+            //   $('.preloader').fadeIn();
+            // })
+
+            var flash = "{{ Session::has('sukses') }}";
+            if (flash) {
+                var pesan = "{{ Session::get('sukses') }}"
+                swal("Sukses", pesan, "success");
+            }
+
+            var gagal = "{{ Session::has('gagal') }}";
+            if (gagal) {
+                var pesan = "{{ Session::get('gagal') }}"
+                swal("Error", pesan, "error");
+            }
+
+            var peringatan = "{{ Session::has('peringatan') }}";
+            if (peringatan) {
+                var pesan = "{{ Session::get('peringatan') }}"
+                swal("Warning", pesan, "warning");
+            }
+            var info = "{{ Session::has('info') }}";
+            if (info) {
+                var pesan = "{{ Session::get('info') }}"
+                swal("Info", pesan, "info");
+            }
+
+
         });
     </script>
 </body>

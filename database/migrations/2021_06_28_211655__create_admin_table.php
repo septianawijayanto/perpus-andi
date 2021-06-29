@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAnggotaTable extends Migration
+class CreateAdminTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,12 @@ class CreateAnggotaTable extends Migration
      */
     public function up()
     {
-        Schema::create('anggota', function (Blueprint $table) {
+        Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_anggota', 15);
-            $table->string('nama', 50);
+            $table->string('nama');
             $table->string('username')->unique();
+            $table->string('foto')->nullable();
             $table->string('password');
-            $table->enum('jenis_anggota', ['siswa', 'guru', 'staf']);
-            $table->string('tempat_lahir', 50);
-            $table->date('tgl_lahir');
-            $table->enum('jk', ['L', 'P']);
-            $table->string('no_hp', 15);
-            $table->text('alamat');
             $table->timestamps();
         });
     }
@@ -36,6 +30,6 @@ class CreateAnggotaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('anggota');
+        Schema::dropIfExists('admin');
     }
 }

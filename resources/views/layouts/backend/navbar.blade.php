@@ -42,7 +42,7 @@
                                 <img alt="Image placeholder" src="{{asset('admin/')}}/assets/favicon.png">
                             </span>
                             <div class="media-body  ml-2  d-none d-lg-block">
-                                <span class="mb-0 text-sm  font-weight-bold">{{Auth::user()->name}}</span>
+                                <span class="mb-0 text-sm  font-weight-bold">{{Session::get('nama')}}</span>
                             </div>
                         </div>
                     </a>

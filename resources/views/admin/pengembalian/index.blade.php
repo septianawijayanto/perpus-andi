@@ -21,9 +21,7 @@
                 <th>Tgl Kembali</th>
                 <th>Status</th>
                 <th>Denda</th>
-                @if(Auth::user()->role=='admin')
                 <th>Aksi</th>
-                @endif
             </tr>
         </thead>
 
@@ -37,13 +35,24 @@
                 <td>{{$dt->anggota->nama}}</td>
                 <td>{{$dt->tgl_pinjam}}</td>
                 <td>{{$dt->tgl_kembali}}</td>
-                <td>{{$dt->status}}</td>
+                <td>
+                    @if($dt->status=='proses')
+                    <span class="badge badge-info">Proses</span>
+                    @elseif($dt->status=='pinjam')
+                    <span class="badge badge-primary">Dipinjam</span>
+                    @elseif($dt->status=='kembali')
+                    <span class="badge badge-success">Kembali</span>
+                    @elseif($dt->status=='rusak')
+                    <span class="badge badge-danger">Rusak</span>
+                    @elseif($dt->status=='hilang')
+                    <span class="badge badge-warning">Kembali</span>
+                    @endif
+                </td>
                 <td>Rp. {{number_format($dt->denda)}}</td>
-                @if(Auth::user()->role=='admin')
                 <td>
 
                     @if($dt->status=='pinjam')
-                    <a href="{{url('/pengembalian/kembali/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Kembalikan</a>
+                    <a href="{{url('admin/pengembalian/kembali/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Kembalikan</a>
                     @if($dt->anggota->jenis_anggota=='siswa')
                     <button data-toggle="modal" data-target="#modalrusak-{{$dt->id}}" class="btn btn-danger btn-sm " class="fa fa-check">Rusak</button>
                     <!-- <a href="{{ url('/pinjam/hilang/'.$dt->id) }}" class="btn btn-warning btn-xs " class="fa fa-check">Hilang</a> -->
@@ -51,7 +60,6 @@
                     @endif
                     @endif
                 </td>
-                @endif
             </tr>
             @endforeach
         </tbody>
@@ -67,7 +75,7 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Tambah Pinjaman</h5>
             </div>
             <div class="modal-body">
-                <form action="{{ url('/pengembalian/hilang/'.$hilang->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/pengembalian/hilang/'.$hilang->id) }}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-group {{$errors->has('denda') ? 'has-error' :''}}">
                         <label for="exampleFormControlInput1">Denda Sebelumnya</label>
@@ -102,7 +110,7 @@
                 <h5 class="modal-title" id="exampleModalLongTitle">Rusak</h5>
             </div>
             <div class="modal-body">
-                <form action="{{ url('/pengembalian/rusak/'.$rusak->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/pengembalian/rusak/'.$rusak->id) }}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-group {{$errors->has('denda') ? 'has-error' :''}}">
                         <label for="exampleFormControlInput1">Denda Sebelumnya</label>

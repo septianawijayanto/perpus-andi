@@ -11,7 +11,7 @@
     <div class="col-md-12">
         <div class="card-body">
             <!-- Konten -->
-            <form action="{{ url('/buku/update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('admin/buku/update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
                 <div class="form-group {{$errors->has('kode_buku') ? 'has-error' :''}}">
                     <label for="exampleFormControlInput1">kode_buku</label>

@@ -18,8 +18,7 @@
             <tr>
                 <th>No</th>
                 <th>Nama</th>
-                <th>Email</th>
-                <th>level</th>
+                <th>Username</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -28,12 +27,12 @@
 
             <tr>
                 <td>{{$e+1}}</td>
-                <td>{{$dt->name}}</td>
-                <td>{{$dt->email}}</td>
-                <td>{{$dt->role}}</td>
+                <td>{{$dt->nama}}</td>
+                <td>{{$dt->username}}</td>
+
                 <td>
-                    <a href="{{url('/user/edit/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Edit</a>
-                    <a href="{{url('/user/delete/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat" onclick="return confirm ('Apakah Akan Anda Hapus?')">Hapus</a>
+                    <a href="{{url('admin/admin/edit/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Edit</a>
+                    <a href="{{url('admin/admin/delete/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat" onclick="return confirm ('Apakah Akan Anda Hapus?')">Hapus</a>
                 </td>
             </tr>
             @endforeach
@@ -45,40 +44,29 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah User</h5>
+                <h5 class="modal-title">Tambah Admin</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('user/create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/admin/create') }}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
-                    <div class="form-group {{$errors->has('name') ? 'has-error' :''}}">
-                        <label for="exampleFormControlInput1">Name</label>
-                        <input name="name" type="text" class="form-control" id="inputname" placeholder="Input name" value="{{old('name')}}">
-                        @if($errors->has('name'))
-                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('name')}}</span>
+                    <div class="form-group {{$errors->has('nama') ? 'has-error' :''}}">
+                        <label for="exampleFormControlInput1">Nama</label>
+                        <input name="nama" type="text" class="form-control" id="inputnama" placeholder="Input nama" value="{{old('nama')}}">
+                        @if($errors->has('nama'))
+                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('nama')}}</span>
+                        @endif
+                    </div>
+                    <div class="form-group {{$errors->has('username') ? 'has-error' :''}}">
+                        <label for="exampleFormControlInput1">Username</label>
+                        <input name="username" type="text" class="form-control" id="inputusername" placeholder="Input Username" value="{{old('username')}}">
+                        @if($errors->has('username'))
+                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('username')}}</span>
                         @endif
                     </div>
 
-                    <div class="form-group {{$errors->has('email') ? 'has-error' :''}}">
-                        <label for="exampleFormControlInput1">Email</label>
-                        <input name="email" type="email" class="form-control" id="inputemail" placeholder="Input email" value="{{old('email')}}">
-                        @if($errors->has('email'))
-                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('email')}}</span>
-                        @endif
-                    </div>
-                    <div class="form-group {{$errors->has('role') ? 'has-error' :''}}">
-                        <label for="exampleFormControlSelect1">Pilih Level</label>
-                        <select name="role" class="form-control" id="exampleFormControlSelect1">
-                            <option value="">-Pilih-</option>
-                            <option value="admin" {{(old('role') == 'admin')? 'selected':''}}>Admin</option>
-                            {{-- <option value="siswa" {{(old('role') == 'siswa')? 'selected':''}}>Siswa</option> --}}
-                        </select>
-                        @if($errors->has('role'))
-                        <span class="right badge badge-danger" class=" help-block">{{$errors->first('role')}}</span>
-                        @endif
-                    </div>
                     <div class="form-group {{$errors->has('password') ? 'has-error' :''}}">
                         <label for="exampleFormControlInput1">Password</label>
                         <input name="password" type="password" class="form-control" id="exampleInputEmail1" placeholder="Input Password" value="{{old('password')}}">

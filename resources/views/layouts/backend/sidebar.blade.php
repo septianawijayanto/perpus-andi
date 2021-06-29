@@ -12,7 +12,7 @@
                 <!-- Nav items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('dashboard')}}">
+                        <a class="nav-link active" href="{{route('dashboard')}}">
                             <i class="ni ni-tv-2 text-primary"></i>
                             <span class="nav-link-text">Dashboard</span>
                         </a>
@@ -27,7 +27,7 @@
                 </h6>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('anggota')}}">
+                        <a class="nav-link active" href="{{route('anggota')}}">
                             <i class="ni ni-circle-08 text-yellow"></i>
                             <span class="nav-link-text">Anggota</span>
                         </a>
@@ -35,7 +35,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('user')}}">
+                        <a class="nav-link active" href="{{route('admin')}}">
                             <i class="ni ni-single-02 text-red"></i>
                             <span class="nav-link-text">Admin</span>
                         </a>
@@ -44,7 +44,7 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('buku')}}">
+                        <a class="nav-link active" href="{{route('buku')}}">
                             <i class="ni ni-book-bookmark text-info"></i>
                             <span class="nav-link-text">Buku</span>
                         </a>
@@ -57,7 +57,7 @@
                 </h6>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('transaksi')}}">
+                        <a class="nav-link active" href="{{route('peminjaman')}}">
                             <i class="ni ni-bullet-list-67 text-primary"></i>
                             <span class="nav-link-text">Peminjaman</span>
                         </a>
@@ -65,7 +65,7 @@
                 </ul>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('pengembalian')}}">
+                        <a class="nav-link active" href="{{route('pengembalian')}}">
                             <i class="ni ni-bullet-list-67 text-yellow"></i>
                             <span class="nav-link-text">Pengembalian</span>
                         </a>
@@ -74,7 +74,7 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('denda')}}">
+                        <a class="nav-link active" href="{{route('denda')}}">
                             <i class="ni ni-bullet-list-67 text-red"></i>
                             <span class="nav-link-text">Denda</span>
                         </a>
@@ -83,7 +83,7 @@
                 <hr class="my-3">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('laporan')}}">
+                        <a class="nav-link active" href="{{route('laporan')}}">
                             <i class="ni ni-paper-diploma text-info"></i>
                             <span class="nav-link-text">Laporan</span>
                         </a>

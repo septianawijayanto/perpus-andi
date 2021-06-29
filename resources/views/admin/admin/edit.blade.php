@@ -11,20 +11,21 @@
     <div class="col-md-12">
         <div class="card-body">
             <!-- Konten -->
-            <form action="{{ url('/user/update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('admin/admin/update/'.$data->id) }}" method="POST" enctype="multipart/form-data">
                 {{csrf_field()}}
-                <div class="form-group {{$errors->has('name') ? 'has-error' :''}}">
-                    <label for="exampleFormControlInput1">Name</label>
-                    <input name="name" type="text" class="form-control" id="inputnisn" placeholder="Input Name" value="{{$data->name}}">
-                    @if($errors->has('name'))
-                    <span class="right badge badge-danger" class=" help-block">{{$errors->first('name')}}</span>
+                <div class="form-group {{$errors->has('nama') ? 'has-error' :''}}">
+                    <label for="exampleFormControlInput1">Nama</label>
+                    <input name="nama" type="text" class="form-control" id="inputnisn" placeholder="Input Nama" value="{{$data->nama}}">
+                    @if($errors->has('nama'))
+                    <span class="right badge badge-danger" class=" help-block">{{$errors->first('nama')}}</span>
                     @endif
                 </div>
-                <div class="form-group {{$errors->has('email') ? 'has-error' :''}}">
-                    <label for="exampleFormControlInput1">Email</label>
-                    <input name="email" type="email" class="form-control" id="inputnoinduk" placeholder="Input email" value="{{$data->email}}">
-                    @if($errors->has('email'))
-                    <span class="right badge badge-danger" class=" help-block">{{$errors->first('email')}}</span>
+
+                <div class="form-group {{$errors->has('username') ? 'has-error' :''}}">
+                    <label for="exampleFormControlInput1">Username</label>
+                    <input name="username" type="text" class="form-control" id="inputnisn" placeholder="Input Username" value="{{$data->username}}">
+                    @if($errors->has('username'))
+                    <span class="right badge badge-danger" class=" help-block">{{$errors->first('username')}}</span>
                     @endif
                 </div>
 

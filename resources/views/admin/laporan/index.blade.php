@@ -12,18 +12,18 @@
                     <b><i class="fa fa-printh"></i> Cetak Laporan</b>
                 </button>
                 <div class="dropdown-menu " x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">
-                    <a href="{{url('/laporan/pdf')}}" class="dropdown-item"> Laporan Semua Transaksi</a>
+                    <a href="{{url('admin/laporan/pdf')}}" class="dropdown-item"> Laporan Semua Transaksi</a>
 
-                    <a href="{{url('/laporan/peminjamanpdf?status=pinjam')}}" class="dropdown-item"> Laporan Sedang Di pinjam</a>
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=pinjam')}}" class="dropdown-item"> Laporan Sedang Di pinjam</a>
 
                     <button class="dropdown-item btn-priodepdf" data-toggle="modal" data-target="#modal"> Laporan Periode</button>
 
-                    <a href="{{url('/laporan/peminjamanpdf?status=kembali')}}" class="dropdown-item"> Laporan Pengembalian</a>
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=kembali')}}" class="dropdown-item"> Laporan Pengembalian</a>
 
 
-                    <a href="{{url('/laporan/anggotapdf')}}" class="dropdown-item"> Laporan Anggota</a>
+                    <a href="{{url('admin/laporan/anggotapdf')}}" class="dropdown-item"> Laporan Anggota</a>
 
-                    <a href="{{url('/laporan/bukupdf')}}" class="dropdown-item"> Laporan Buku</a>
+                    <a href="{{url('admin/laporan/bukupdf')}}" class="dropdown-item"> Laporan Buku</a>
 
                 </div>
             </div>
@@ -56,7 +56,19 @@
                 <td>{{$dt->anggota->nama}}</td>
                 <td>{{$dt->tgl_pinjam}}</td>
                 <td>{{$dt->tgl_kembali}}</td>
-                <td>{{$dt->status}}</td>
+                <td>
+                    @if($dt->status=='proses')
+                    <span class="badge badge-info">Proses</span>
+                    @elseif($dt->status=='pinjam')
+                    <span class="badge badge-primary">Dipinjam</span>
+                    @elseif($dt->status=='kembali')
+                    <span class="badge badge-success">Kembali</span>
+                    @elseif($dt->status=='rusak')
+                    <span class="badge badge-danger">Rusak</span>
+                    @elseif($dt->status=='hilang')
+                    <span class="badge badge-warning">Kembali</span>
+                    @endif
+                </td>
                 <td>Rp. {{number_format($dt->denda)}}</td>
             </tr>
             @endforeach
@@ -74,7 +86,7 @@
             </div>
             <div class="modal-body">
 
-                <form role="form" action="{{ url('laporan/periodepdf') }}" method="get">
+                <form role="form" action="{{ url('admin/laporan/periodepdf') }}" method="get">
                     <div class="box-body">
 
                         <div class="form-group">

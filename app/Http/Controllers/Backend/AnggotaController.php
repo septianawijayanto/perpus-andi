@@ -37,7 +37,7 @@ class AnggotaController extends Controller
 
         $data = Anggota::all();
         $title = 'Data Anggota';
-        return view('anggota.index', compact('title', 'data', 'kode'));
+        return view('admin.anggota.index', compact('title', 'data', 'kode'));
     }
     public function create(Request $request)
     {
@@ -50,6 +50,8 @@ class AnggotaController extends Controller
         $this->validate($request, [
             // 'kode_anggota' => 'required',
             'nama' => 'required',
+            'username' => 'required',
+            'password' => 'required',
             'jenis_anggota' => 'required',
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required',
@@ -58,10 +60,23 @@ class AnggotaController extends Controller
             'no_hp' => 'required',
         ], $messages);
 
+        $data['kode_anggota'] = $request->kode_anggota;
 
-        $data = Anggota::create($request->all());
+        $data['nama'] = $request->nama;
+        $data['username'] = $request->username;
+        $data['password'] = bcrypt($request->password);
+        $data['jenis_anggota'] = $request->jenis_anggota;
+        $data['tempat_lahir'] = $request->tempat_lahir;
+        $data['tgl_lahir'] = $request->tgl_lahir;
+        $data['jk'] = $request->jk;
+        $data['alamat'] = $request->alamat;
+        $data['no_hp'] = $request->no_hp;
+        $data['created_at'] = date('Y-m-d H:i:s', strtotime(Carbon::today()->toDateString()));
+        $data['updated_at'] = date('Y-m-d H:i:s', strtotime(Carbon::today()->toDateString()));
 
-        return redirect('anggota')->with('sukses', 'Data Siswa Berhasil di Tambah');
+        Anggota::create($data);
+
+        return redirect()->back()->with('sukses', 'Data Siswa Berhasil di Tambah');
     }
     public function delete($id)
     {
@@ -76,10 +91,9 @@ class AnggotaController extends Controller
     public function edit($id)
     {
         $title = 'Edit Anggota';
-        $user = User::get();
 
         $data = Anggota::find($id);
-        return view('anggota.edit', compact('data', 'user', 'title'));
+        return view('admin.anggota.edit', compact('data', 'title'));
     }
     public function update(Request $request, $id)
     {
@@ -92,6 +106,8 @@ class AnggotaController extends Controller
         $this->validate($request, [
             // 'kode_anggota' => 'required',
             'nama' => 'required',
+            'username' => 'required',
+            // 'password' => 'required',
             'jenis_anggota' => 'required',
             'tempat_lahir' => 'required',
             'tgl_lahir' => 'required',
@@ -102,6 +118,7 @@ class AnggotaController extends Controller
 
 
         $data['nama'] = $request->nama;
+        $data['username'] = $request->username;
         $data['jenis_anggota'] = $request->jenis_anggota;
         $data['tempat_lahir'] = $request->tempat_lahir;
         $data['tgl_lahir'] = $request->tgl_lahir;
@@ -112,13 +129,13 @@ class AnggotaController extends Controller
         $data['updated_at'] = date('Y-m-d H:i:s', strtotime(Carbon::today()->toDateString()));
 
         Anggota::where('id', $id)->update($data);
-        return redirect('anggota')->with('sukses', 'Anggota Berhasil Diedit');
+        return redirect('admin/anggota')->with('sukses', 'Anggota Berhasil Diedit');
     }
     public function cetak($id)
     {
         $tgl = date('d F Y');
         $data = Anggota::find($id);
-        $pdf = PDF::loadview('anggota.kartu', compact('data', 'tgl'))->setPaper('a5', 'landscape');
+        $pdf = PDF::loadview('admin.anggota.kartu', compact('data', 'tgl'))->setPaper('a5', 'landscape');
         return $pdf->stream('Kartu ' . $data->nama . ' ' . date('Y-m-d_H:i:s') . '.pdf');
     }
 }

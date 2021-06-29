@@ -22,9 +22,7 @@
                 <th>Tgl Kembali</th>
                 <th>Denda</th>
                 <th>Status Denda</th>
-                @if(Auth::user()->role=='admin')
                 <th>Aksi</th>
-                @endif
             </tr>
         </thead>
         <tbody>
@@ -37,18 +35,22 @@
                 <td>{{$dt->tgl_pinjam}}</td>
                 <td>{{$dt->tgl_kembali}}</td>
                 <td>Rp. {{number_format($dt->denda)}}</td>
-                <td>{{$dt->status_denda}}</td>
-                @if(Auth::user()->role=='admin')
                 <td>
                     @if($dt->status_denda=='belum lunas')
-                    <a href="{{url('/denda/lunasi/'.$dt->id)}}" class="btn btn-primary btn-sm btn-flat">Lunasi</a>
+                    <span class="badge badge-warning">Belum Lunas</span>
                     @elseif($dt->status_denda=='lunas')
-                    <a href="{{url('/denda/kwitansi/'.$dt->id)}}" class="btn btn-warning btn-sm btn-flat">Kwitansi</a>
+                    <span class="badge badge-success">Lunas</span>
+                    @endif
+                </td>
+                <td>
+                    @if($dt->status_denda=='belum lunas')
+                    <a href="{{url('admin/denda/lunasi/'.$dt->id)}}" class="btn btn-primary btn-sm btn-flat">Lunasi</a>
+                    @elseif($dt->status_denda=='lunas')
+                    <a href="{{url('admin/denda/kwitansi/'.$dt->id)}}" class="btn btn-warning btn-sm btn-flat">Kwitansi</a>
 
                     @endif
 
                 </td>
-                @endif
             </tr>
             @endforeach
         </tbody>

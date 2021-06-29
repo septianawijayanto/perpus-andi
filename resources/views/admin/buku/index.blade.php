@@ -26,9 +26,7 @@
                 <th>Sumber</th>
                 <th>Lokasi</th>
                 <th>Jumlah Buku</th>
-                @if(Auth::user()->role=='admin')
                 <th>Aksi</th>
-                @endif
             </tr>
         </thead>
         <tbody>
@@ -45,13 +43,12 @@
                 <td>{{$dt->sumber}}</td>
                 <td>{{$dt->lokasi}}</td>
                 <td>{{$dt->jml_buku}}</td>
-                @if(Auth::user()->role=='admin')
+
                 <td>
-                    <a href="{{url('/buku/edit/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Edit</a>
-                    <a href="{{url('/buku/delete/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat" onclick="return confirm ('Apakah Akan Anda Hapus?')">Hapus</a>
+                    <a href="{{url('admin/buku/edit/'.$dt->id)}}" class="btn btn-success btn-sm btn-flat">Edit</a>
+                    <a href="{{url('admin/buku/delete/'.$dt->id)}}" class="btn btn-danger btn-sm btn-flat" onclick="return confirm ('Apakah Akan Anda Hapus?')">Hapus</a>
 
                 </td>
-                @endif
             </tr>
             @endforeach
         </tbody>
@@ -68,7 +65,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="{{ url('buku/create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/buku/create') }}" method="POST" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="form-group {{$errors->has('judul') ? 'has-error' :''}}">
                         <label for="exampleFormControlInput1">Judul</label>

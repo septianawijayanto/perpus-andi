@@ -38,104 +38,55 @@ class TransaksiController extends Controller
         }
         $anggota = Anggota::get();
         $buku = Buku::where('jml_buku', '>', 0)->get();
-        if (Auth::user()->role == 'admin') {
-            $data = Transaksi::orderBy('id', 'DESC')->get();
-        } else {
-            $data = Transaksi::orderBy('id', 'DESC')->whereIn('status', ['proses', 'pinjam'])->where('anggota_id', Auth::user()->anggota->id)->get();
-        }
 
+        $data = Transaksi::orderBy('id', 'DESC')->get();
         $title = 'Transaksi Peminjaman';
-        return view('transaksi.index', compact('title', 'data', 'anggota', 'buku', 'kode'));
+        return view('admin.peminjaman.index', compact('title', 'data', 'anggota', 'buku', 'kode'));
     }
     public function create(Request $request)
     {
-        if (Auth::user()->role == 'admin') {
-            $cek = Transaksi::where('status', 'pinjam')->where('anggota_id', $request->get('anggota_id'))->count();
-            if ($cek < 3) {
-                if (Transaksi::where('anggota_id', $request->get('anggota_id'))->where('buku_id', $request->get('buku_id'))->where('status', 'pinjam')->exists()) {
-                    return redirect()->back()->with('gagal', 'Buku Telah dipinjam');
-                } else {
-                    $messages = [
-                        'required' => ':attribute wajib diisi!',
-                        'min' => ':attribute harus diisi minimal :min karakter!',
-                        'max' => ':attribute harus diisi maksimal :max karakter!',
-                        'kode.required' => 'isbn Wajib di Isi',
-                        'judul.required' => 'Judul Wajib di Isi',
-                        'nama.required' => 'nama Wajib di Isi',
-                    ];
-                    //dd($request->all());
-                    $this->validate($request, [
-                        'buku_id' => 'required',
-                        'anggota_id' => 'required',
-                    ], $messages);
+        $cek = Transaksi::where('status', 'pinjam')->where('anggota_id', $request->get('anggota_id'))->count();
+        if ($cek < 3) {
+            if (Transaksi::where('anggota_id', $request->get('anggota_id'))->where('buku_id', $request->get('buku_id'))->where('status', 'pinjam')->exists()) {
+                return redirect()->back()->with('gagal', 'Buku Telah dipinjam');
+            } else {
+                $messages = [
+                    'required' => ':attribute wajib diisi!',
+                    'min' => ':attribute harus diisi minimal :min karakter!',
+                    'max' => ':attribute harus diisi maksimal :max karakter!',
+                    'kode.required' => 'isbn Wajib di Isi',
+                    'judul.required' => 'Judul Wajib di Isi',
+                    'nama.required' => 'nama Wajib di Isi',
+                ];
+                //dd($request->all());
+                $this->validate($request, [
+                    'buku_id' => 'required',
+                    'anggota_id' => 'required',
+                ], $messages);
 
-                    // DD($request->all());
-                    $transaksi = Transaksi::create([
-                        'kode_transaksi' => $request->get('kode_transaksi'),
-                        'tgl_pinjam' => Date('Y-m-d', strtotime(Carbon::today()->toDateString())),
-                        'tgl_kembali' => Date('Y-m-d', strtotime(Carbon::today()->addDay(7)->toDateString())),
-                        'buku_id' => $request->get('buku_id'),
-                        'anggota_id' => $request->get('anggota_id'),
-                        'denda' => 0,
-                        'status' => 'pinjam'
+                // DD($request->all());
+                $transaksi = Transaksi::create([
+                    'kode_transaksi' => $request->get('kode_transaksi'),
+                    'tgl_pinjam' => Date('Y-m-d', strtotime(Carbon::today()->toDateString())),
+                    'tgl_kembali' => Date('Y-m-d', strtotime(Carbon::today()->addDay(7)->toDateString())),
+                    'buku_id' => $request->get('buku_id'),
+                    'anggota_id' => $request->get('anggota_id'),
+                    'denda' => 0,
+                    'status' => 'pinjam'
+                ]);
+
+
+                $transaksi->buku->where('id', $transaksi->buku_id)
+                    ->update([
+                        'jml_buku' => ($transaksi->buku->jml_buku - 1),
+                        'jml_dipinjam' => $transaksi->buku->jml_dipinjam + 1,
                     ]);
 
-
-                    $transaksi->buku->where('id', $transaksi->buku_id)
-                        ->update([
-                            'jml_buku' => ($transaksi->buku->jml_buku - 1),
-                            'jml_dipinjam' => $transaksi->buku->jml_dipinjam + 1,
-                        ]);
-
-                    // Transaksi::insert($data);
-                    return redirect()->back()->with('sukses', 'Transaksi Berhasil ditambah');
-                }
-            } else {
-                return  redirect()->back()->with('gagal', 'Peminjaman Maksimal');
+                // Transaksi::insert($data);
+                return redirect()->back()->with('sukses', 'Transaksi Berhasil ditambah');
             }
         } else {
-            $cek = Transaksi::where('status', 'pinjam')->where('anggota_id', $request->get('anggota_id'))->count();
-            if ($cek < 3) {
-                if (Transaksi::where('anggota_id', $request->get('anggota_id'))->where('buku_id', $request->get('buku_id'))->where('status', 'pinjam')->exists()) {
-                    return redirect()->back()->with('gagal', 'Buku Telah dipinjam');
-                } else {
-                    $messages = [
-                        'required' => ':attribute wajib diisi!',
-                        'min' => ':attribute harus diisi minimal :min karakter!',
-                        'max' => ':attribute harus diisi maksimal :max karakter!',
-                        'kode.required' => 'isbn Wajib di Isi',
-                        'judul.required' => 'Judul Wajib di Isi',
-                        'nama.required' => 'nama Wajib di Isi',
-
-                    ];
-                    //dd($request->all());
-                    $this->validate($request, [
-                        'buku_id' => 'required',
-                    ], $messages);
-                    // DD($request->all());
-                    $transaksi = Transaksi::create([
-                        'kode_transaksi' => $request->get('kode_transaksi'),
-                        'tgl_pinjam' => Date('Y-m-d', strtotime(Carbon::today()->toDateString())),
-                        'tgl_kembali' => Date('Y-m-d', strtotime(Carbon::today()->addDay(7)->toDateString())),
-                        'buku_id' => $request->get('buku_id'),
-                        'anggota_id' => $request->get('anggota_id'),
-                        'denda' => 0,
-                        'status' => 'proses'
-                    ]);
-
-
-                    // $transaksi->buku->where('id', $transaksi->buku_id)
-                    //     ->update([
-                    //         'jml_buku' => ($transaksi->buku->jml_buku - 1),
-                    //         'jml_dipinjam' => $transaksi->buku->jml_dipinjam + 1,
-                    //     ]);
-
-                    // Transaksi::insert($data);
-                    return redirect()->back()->with('sukses', 'Transaksi Berhasil ditambah');
-                }
-            } else {
-                return  redirect()->back()->with('gagal', 'Peminjaman Maksimal');
-            }
+            return  redirect()->back()->with('gagal', 'Peminjaman Maksimal');
         }
     }
     public function setujui($id)

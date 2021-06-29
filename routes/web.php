@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Backend\DashboardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -8,8 +9,8 @@ use Illuminate\Support\Facades\Route;
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
+| Here is where you can register web Routes for your application. These
+| Routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
 */
@@ -21,80 +22,78 @@ Route::get('master', function () {
 Route::get('/', function () {
     return redirect('login');
 });
-Route::get('coba', function () {
-    return view('buku.coba');
+
+Route::get('login', 'Login\LoginController@index');
+Route::post('post/login', 'Login\LoginController@postlogin');
+Route::get('keluar', 'Login\LoginController@logout');
+
+
+Route::group(['middleware' => 'admin'], function () {
+    Route::prefix('/admin')->group(function () {
+        Route::get('dashboard', 'Backend\DashboardController@index')->name('dashboard');
+
+        // ============================================================
+
+        //anggota
+        Route::get('/anggota', 'Backend\AnggotaController@index')->name('anggota');
+        Route::post('/anggota/create', 'Backend\AnggotaController@create');
+        Route::get('/anggota/edit/{id}', 'Backend\AnggotaController@edit');
+        Route::post('/anggota/update/{id}', 'Backend\AnggotaController@update');
+        Route::get('/anggota/delete/{id}', 'Backend\AnggotaController@delete');
+        Route::get('/anggota/cetak/{id}', 'Backend\AnggotaController@cetak');
+
+        //admin
+        Route::get('/admin', 'Backend\AdminController@index')->name('admin');
+        Route::post('/admin/create', 'Backend\AdminController@create');
+        Route::get('/admin/edit/{id}', 'Backend\AdminController@edit');
+        Route::post('/admin/update/{id}', 'Backend\AdminController@update');
+        Route::get('/admin/delete/{id}', 'Backend\AdminController@delete');
+
+        //buku
+        Route::get('/buku', 'Backend\BukuController@index')->name('buku');
+        Route::post('/buku/create', 'Backend\BukuController@create');
+        Route::get('/buku/edit/{id}', 'Backend\BukuController@edit');
+        Route::post('/buku/update/{id}', 'Backend\BukuController@update');
+        Route::get('/buku/delete/{id}', 'Backend\BukuController@delete');
+        Route::get('/buku/export', 'Backend\BukuController@export');
+        Route::post('/buku/import', 'Backend\BukuController@import');
+
+        //peminjaman
+        Route::get('/peminjaman', 'Backend\TransaksiController@index')->name('peminjaman');
+        Route::post('/peminjaman/create', 'Backend\TransaksiController@create');
+        Route::get('peminjaman/setujui/{id}', 'Backend\TransaksiController@setujui');
+        Route::get('peminjaman/tolak/{id}', 'Backend\TransaksiController@tolak');
+        Route::get('peminjaman/perpanjang/{id}', 'Backend\TransaksiController@perpanjang');
+
+        //pengembalian
+        Route::get('/pengembalian', 'Backend\PengembalianController@index')->name('pengembalian');
+        Route::get('pengembalian/kembali/{id}', 'Backend\PengembalianController@kembalikan');
+        Route::match(['get', 'post'], 'pengembalian/rusak/{id}', 'Backend\PengembalianController@rusak');
+        Route::match(['get', 'post'], 'pengembalian/hilang/{id}', 'Backend\PengembalianController@hilang');
+
+        //denda
+        Route::get('/denda', 'Backend\DendaController@index')->name('denda');
+        Route::get('/denda/lunasi/{id}', 'Backend\DendaController@bayar');
+        Route::get('/denda/kwitansi/{id}', 'Backend\DendaController@kwitansi');
+
+        //laporan
+        Route::get('/laporan', 'Backend\LaporanController@index')->name('laporan');
+        Route::get('/laporan/pdf', 'Backend\LaporanController@pdf');
+        Route::get('/laporan/peminjamanpdf', 'Backend\LaporanController@peminjamanpdf');
+        Route::get('/laporan/periodepdf', 'Backend\LaporanController@periodepdf');
+        Route::get('/laporan/anggotapdf', 'Backend\LaporanController@anggotapdf');
+        Route::get('/laporan/bukupdf', 'Backend\LaporanController@bukupdf');
+    });
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::group(['middleware' => ['auth', 'chekRole:admin']], function () {
-    route::get('/dashboard', 'Backend\DashboardController@index');
-
-    route::get('/transaksi', 'Backend\TransaksiController@index');
-    Route::get('/denda', 'Backend\DendaController@index');
-    route::get('/pengembalian', 'Backend\PengembalianController@index');
-    route::post('/transaksi/create', 'Backend\TransaksiController@create');
-
-    route::get('/buku', 'Backend\BukuController@index');
+Route::group(['middleware' => 'anggota'], function () {
+    Route::prefix('/anggota')->group(function () {
+        //Dashboard
+        Route::get('dashboard', 'Anggota\DashboardController@index')->name('adashboard');
+        Route::get('buku', 'Anggota\BukuController@index')->name('abuku');
+        Route::get('transaksi', 'Anggota\BokingController@index')->name('atransaksi');
+        Route::post('transaksi/create', 'Anggota\BokingController@create');
 
 
-    // ============================================================
-
-    //anggota
-    route::get('/anggota', 'Backend\AnggotaController@index');
-    route::post('/anggota/create', 'Backend\AnggotaController@create');
-    route::get('/anggota/edit/{id}', 'Backend\AnggotaController@edit');
-    route::post('/anggota/update/{id}', 'Backend\AnggotaController@update');
-    route::get('/anggota/delete/{id}', 'Backend\AnggotaController@delete');
-    route::get('/anggota/cetak/{id}', 'Backend\AnggotaController@cetak');
-
-    //user
-    route::get('/user', 'Backend\UserController@index');
-    route::post('/user/create', 'Backend\UserController@create');
-    route::get('/user/edit/{id}', 'Backend\UserController@edit');
-    route::post('/user/update/{id}', 'Backend\UserController@update');
-    route::get('/user/delete/{id}', 'Backend\UserController@delete');
-
-    //buku
-    route::post('/buku/create', 'Backend\BukuController@create');
-    route::get('/buku/edit/{id}', 'Backend\BukuController@edit');
-    route::post('/buku/update/{id}', 'Backend\BukuController@update');
-    route::get('/buku/delete/{id}', 'Backend\BukuController@delete');
-    Route::get('/buku/export', 'Backend\BukuController@export');
-    Route::post('/buku/import', 'Backend\BukuController@import');
-
-    //transaksi
-
-    route::get('transaksi/setujui/{id}', 'Backend\TransaksiController@setujui');
-    route::get('transaksi/tolak/{id}', 'Backend\TransaksiController@tolak');
-    route::get('transaksi/perpanjang/{id}', 'Backend\TransaksiController@perpanjang');
-
-    //pengembalian
-    route::get('pengembalian/kembali/{id}', 'Backend\PengembalianController@kembalikan');
-    Route::match(['get', 'post'], 'pengembalian/rusak/{id}', 'Backend\PengembalianController@rusak');
-    Route::match(['get', 'post'], 'pengembalian/hilang/{id}', 'Backend\PengembalianController@hilang');
-
-    //denda
-
-    Route::get('/denda/lunasi/{id}', 'Backend\DendaController@bayar');
-    Route::get('/denda/kwitansi/{id}', 'Backend\DendaController@kwitansi');
-
-    //laporan
-    Route::get('/laporan', 'Backend\LaporanController@index');
-    Route::get('/laporan/pdf', 'Backend\LaporanController@pdf');
-    Route::get('/laporan/peminjamanpdf', 'Backend\LaporanController@peminjamanpdf');
-    Route::get('/laporan/periodepdf', 'Backend\LaporanController@periodepdf');
-    Route::get('/laporan/anggotapdf', 'Backend\LaporanController@anggotapdf');
-    Route::get('/laporan/bukupdf', 'Backend\LaporanController@bukupdf');
-});
-
-Route::get('keluar', function () {
-    Auth::logout();
-    return redirect('/login');
-});
-Auth::routes();
-
-Route::get('/home', function () {
-    return redirect('/dashboard');
+        // Route::get
+    });
 });
