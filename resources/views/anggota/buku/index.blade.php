@@ -5,9 +5,6 @@
         <div class="col">
             <a href="#!" class="btn btn-sm btn-warning btn-refresh">Refresh</a>
         </div>
-        <div class="col text-right">
-            <a href="#!" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus"></i> Tambah Data </a>
-        </div>
     </div>
 </div>
 <div class="table-responsive">

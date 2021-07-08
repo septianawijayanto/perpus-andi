@@ -110,7 +110,37 @@
 </head>
 
 <body>
-    <h1 class="center">SMP Negeri 11 Muaro Jambi</h1>
+    <table class="center">
+        <tr>
+            <td rowspan="3" class="center" style="border: 0px;">
+                <img src="gambar/logokabupaten.png" class="center" class="img img-responsive">
+            </td>
+            <td style="border: 0px;">
+                <b> PEMERINTAH KABUPATEN MUARO JAMBI</b>
+            </td>
+            <td rowspan="3" class="center" style="border: 0px;">
+                <img src="gambar/logotutwuri.png" class="center" class="img img-responsive">
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">
+                <b> DINAS PENDIDIKAN DAN KEBUDAYAAN</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">
+                <b style="font-size: 30px;">SMP Negeri 11 Muaro Jambi </b>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">NPSN :10502828</td>
+            <td style="border: 0px;">
+                <font style="font-size: 20px;">Jl. K.H. Muhammad Agus, Desa Mudung Darat, Kecamatan Maro Sebo</font>
+            </td>
+            <td style="border: 0px;">NSS : </td>
+        </tr>
+    </table>
+    <h1 class="center"></h1>
     <hr>
     <h5 class="center"><u> LAPORAN DATA TRANSAKSI</u></h5>
     <table id="pseudo-demo">
@@ -137,7 +167,21 @@
                 <td>{{$dt->anggota->nama}}</td>
                 <td>{{$dt->tgl_pinjam}}</td>
                 <td>{{$dt->tgl_kembali}}</td>
-                <td>{{$dt->status}}</td>
+                <td>
+                    @if($dt->status=='proses')
+                    <span class="badge badge-info">Proses</span>
+                    @elseif($dt->status=='pinjam')
+                    <span class="badge badge-primary">Dipinjam</span>
+                    @elseif($dt->status=='kembali')
+                    <span class="badge badge-success">Kembali</span>
+                    @elseif($dt->status=='rusak')
+                    <span class="badge badge-danger">Rusak</span>
+                    @elseif($dt->status=='hilang')
+                    <span class="badge badge-warning">Hilang</span>
+                    @else
+                    <span class="badge badge-warning">Ditolak</span>
+                    @endif
+                </td>
                 <td>Rp. {{number_format($dt->denda)}}</td>
 
             </tr>

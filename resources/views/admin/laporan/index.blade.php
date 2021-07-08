@@ -7,18 +7,23 @@
         </div>
         <div class="col text-right">
             <div class="btn-group dropdown float-right">
-                <button class="btn btn-sm btn-flat btn-warning btn-refresh"> Refresh</button>
                 <button type="button" class="btn btn-sm btn-flat btn-primary  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <b><i class="fa fa-printh"></i> Cetak Laporan</b>
                 </button>
                 <div class="dropdown-menu " x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 30px, 0px);">
-                    <a href="{{url('admin/laporan/pdf')}}" class="dropdown-item"> Laporan Semua Transaksi</a>
+                    <a href="{{url('admin/laporan/pdf')}}" class="dropdown-item">Semua</a>
 
-                    <a href="{{url('admin/laporan/peminjamanpdf?status=pinjam')}}" class="dropdown-item"> Laporan Sedang Di pinjam</a>
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=pinjam')}}" class="dropdown-item"> Dipinjam/Blm Kembali</a>
 
-                    <button class="dropdown-item btn-priodepdf" data-toggle="modal" data-target="#modal"> Laporan Periode</button>
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=kembali')}}" class="dropdown-item"> Sudah Kembali</a>
 
-                    <a href="{{url('admin/laporan/peminjamanpdf?status=kembali')}}" class="dropdown-item"> Laporan Pengembalian</a>
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=tolak')}}" class="dropdown-item"> Ditolak</a>
+
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=hilang')}}" class="dropdown-item"> Hilang</a>
+
+                    <a href="{{url('admin/laporan/peminjamanpdf?status=rusak')}}" class="dropdown-item"> Rusak</a>
+                    <button class="dropdown-item btn-priodepdf" data-toggle="modal" data-target="#modal"> Periode</button>
+
 
 
                     <a href="{{url('admin/laporan/anggotapdf')}}" class="dropdown-item"> Laporan Anggota</a>
@@ -66,7 +71,9 @@
                     @elseif($dt->status=='rusak')
                     <span class="badge badge-danger">Rusak</span>
                     @elseif($dt->status=='hilang')
-                    <span class="badge badge-warning">Kembali</span>
+                    <span class="badge badge-warning">Hilang</span>
+                    @else
+                    <span class="badge badge-warning">Ditolak</span>
                     @endif
                 </td>
                 <td>Rp. {{number_format($dt->denda)}}</td>

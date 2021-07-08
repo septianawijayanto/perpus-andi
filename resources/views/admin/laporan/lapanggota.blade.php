@@ -110,7 +110,36 @@
 </head>
 
 <body>
-    <h1 class="center">SMP Negeri 11 Muaro Jambi </h1>
+    <table class="center">
+        <tr>
+            <td rowspan="3" class="center" style="border: 0px;">
+                <img src="gambar/logokabupaten.png" class="center" class="img img-responsive">
+            </td>
+            <td style="border: 0px;">
+                <b> PEMERINTAH KABUPATEN MUARO JAMBI</b>
+            </td>
+            <td rowspan="3" class="center" style="border: 0px;">
+                <img src="gambar/logotutwuri.png" class="center" class="img img-responsive">
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">
+                <b> DINAS PENDIDIKAN DAN KEBUDAYAAN</b>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">
+                <b style="font-size: 30px;">SMP Negeri 11 Muaro Jambi </b>
+            </td>
+        </tr>
+        <tr>
+            <td style="border: 0px;">NPSN :10502828</td>
+            <td style="border: 0px;">
+                <font style="font-size: 20px;">Jl. K.H. Muhammad Agus, Desa Mudung Darat, Kecamatan Maro Sebo</font>
+            </td>
+            <td style="border: 0px;">NSS : </td>
+        </tr>
+    </table>
     <hr>
     <h5 class="center"><u> LAPORAN DATA ANGGOTA</u></h5>
     <table id="pseudo-demo">

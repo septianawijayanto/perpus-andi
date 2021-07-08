@@ -32,6 +32,12 @@ class LaporanController extends Controller
                 $dt->where('status', 'pinjam');
             } elseif ($request->get('status') == 'kembali') {
                 $dt->where('status', 'kembali');
+            } elseif ($request->get('status') == 'rusak') {
+                $dt->where('status', 'rusak');
+            } elseif ($request->get('status') == 'hilang') {
+                $dt->where('status', 'hilang');
+            } elseif ($request->get('status') == 'tolak') {
+                $dt->where('status', 'tolak');
             }
         }
         $data = $dt->get();

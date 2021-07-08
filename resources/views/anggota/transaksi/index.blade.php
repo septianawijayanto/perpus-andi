@@ -55,7 +55,9 @@
                     @elseif($dt->status=='rusak')
                     <span class="badge badge-danger">Rusak</span>
                     @elseif($dt->status=='hilang')
-                    <span class="badge badge-warning">Kembali</span>
+                    <span class="badge badge-warning">Hilang</span>
+                    @else
+                    <span class="badge badge-warning">Ditolak</span>
                     @endif
                 </td>
             </tr>
