@@ -45,12 +45,13 @@ class AnggotaController extends Controller
             'required' => ':attribute wajib diisi!',
             'min' => ':attribute harus diisi minimal :min karakter!',
             'max' => ':attribute harus diisi maksimal :max karakter!',
+            'username.unique' => 'Username Suda Terdaftar',
         ];
         //dd($request->all());
         $this->validate($request, [
             // 'kode_anggota' => 'required',
             'nama' => 'required',
-            'username' => 'required',
+            'username' => 'required|unique:anggota',
             'password' => 'required',
             'jenis_anggota' => 'required',
             'tempat_lahir' => 'required',

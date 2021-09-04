@@ -91,9 +91,7 @@ Route::group(['middleware' => 'anggota'], function () {
         Route::get('dashboard', 'Anggota\DashboardController@index')->name('adashboard');
         Route::get('buku', 'Anggota\BukuController@index')->name('abuku');
         Route::get('transaksi', 'Anggota\BokingController@index')->name('atransaksi');
+        // Route::get('carilengkap', 'Anggota\BokingController@index')->name('carilengkap');
         Route::post('transaksi/create', 'Anggota\BokingController@create');
-
-
-        // Route::get
     });
 });

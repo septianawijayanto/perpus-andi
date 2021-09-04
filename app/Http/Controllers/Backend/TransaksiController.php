@@ -45,10 +45,10 @@ class TransaksiController extends Controller
     }
     public function create(Request $request)
     {
-        $cek = Transaksi::where('status', 'pinjam')->where('anggota_id', $request->get('anggota_id'))->count();
+        $cek = Transaksi::whereIn('status', ['pinjam', 'proses'])->where('anggota_id', $request->get('anggota_id'))->count();
         if ($cek < 3) {
-            if (Transaksi::where('anggota_id', $request->get('anggota_id'))->where('buku_id', $request->get('buku_id'))->where('status', 'pinjam')->exists()) {
-                return redirect()->back()->with('gagal', 'Buku Telah dipinjam');
+            if (Transaksi::where('anggota_id', $request->get('anggota_id'))->where('buku_id', $request->get('buku_id'))->whereIn('status', ['pinjam', 'proses'])->exists()) {
+                return redirect()->back()->with('info', 'Buku Telah dipinjam');
             } else {
                 $messages = [
                     'required' => ':attribute wajib diisi!',
@@ -86,7 +86,7 @@ class TransaksiController extends Controller
                 return redirect()->back()->with('sukses', 'Transaksi Berhasil ditambah');
             }
         } else {
-            return  redirect()->back()->with('gagal', 'Peminjaman Maksimal');
+            return  redirect()->back()->with('info', 'Peminjaman Maksimal');
         }
     }
     public function setujui($id)

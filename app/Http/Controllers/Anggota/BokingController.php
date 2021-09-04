@@ -47,7 +47,7 @@ class BokingController extends Controller
         $cek = Transaksi::whereIn('status', ['pinjam', 'proses'])->where('anggota_id', Session::get('id'))->count();
         if ($cek < 3) {
             if (Transaksi::where('anggota_id', Session::get('id'))->where('buku_id', $request->get('buku_id'))->whereIn('status', ['pinjam', 'proses'])->exists()) {
-                return redirect()->back()->with('gagal', 'Buku Telah dipinjam');
+                return redirect()->back()->with('peringatan', 'Buku Telah dipinjam');
             } else {
                 $messages = [
                     'required' => ':attribute wajib diisi!',
@@ -72,7 +72,7 @@ class BokingController extends Controller
                 return redirect()->back()->with('sukses', 'Transaksi Berhasil ditambah');
             }
         } else {
-            return  redirect()->back()->with('gagal', 'Peminjaman Maksimal');
+            return  redirect()->back()->with('info', 'Peminjaman Maksimal');
         }
     }
 }

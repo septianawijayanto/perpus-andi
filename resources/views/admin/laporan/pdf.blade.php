@@ -104,6 +104,7 @@
         hr {
             border: 2px solid black double;
         }
+
     </style>
     <link rel="stylesheet" href="">
     <title>@yield('judul')</title>
@@ -142,7 +143,20 @@
     </table>
     <h1 class="center"></h1>
     <hr>
-    <h5 class="center"><u> LAPORAN DATA TRANSAKSI</u></h5>
+    @if (request('status') == 'kembali')
+        <h5 class="center"><u> LAPORAN DATA TRANSAKSI KEMBALI</u></h5>
+    @elseif(request('status') == 'pinjam')
+        <h5 class="center"><u> LAPORAN DATA TRANSAKSI DIPINJAM</u></h5>
+    @elseif(request('status') == 'rusak')
+        <h5 class="center"><u> LAPORAN DATA TRANSAKSI RUSAK</u></h5>
+    @elseif(request('status') == 'hilang')
+        <h5 class="center"><u> LAPORAN DATA TRANSAKSI HILANG</u></h5>
+    @elseif(request('status') == 'tolak')
+        <h5 class="center"><u> LAPORAN DATA TRANSAKSI DITOLAK</u></h5>
+    @else
+        <h5 class="center"><u> LAPORAN DATA TRANSAKSI</u></h5>
+    @endif
+
     <table id="pseudo-demo">
         <thead>
             <tr>
@@ -151,44 +165,54 @@
                 <td>Judul</td>
                 <td>Peminjam</td>
                 <td>Tgl Pinjam</td>
-                <td>Tgl Kembali</td>
+                @if (request('status') == 'hilang')
+
+                @else
+                    <td>Tgl Kembali</td>
+                @endif
+
                 <td>Status</td>
                 <td>Denda</td>
             </tr>
         </thead>
 
         <tbody>
-            @foreach ($data as $e=>$dt)
+            @foreach ($data as $e => $dt)
 
-            <tr>
-                <td>{{$e+1}}</td>
-                <td>{{$dt->kode_transaksi}}</td>
-                <td>{{$dt->buku->judul}}</td>
-                <td>{{$dt->anggota->nama}}</td>
-                <td>{{$dt->tgl_pinjam}}</td>
-                <td>{{$dt->tgl_kembali}}</td>
-                <td>
-                    @if($dt->status=='proses')
-                    <span class="badge badge-info">Proses</span>
-                    @elseif($dt->status=='pinjam')
-                    <span class="badge badge-primary">Dipinjam</span>
-                    @elseif($dt->status=='kembali')
-                    <span class="badge badge-success">Kembali</span>
-                    @elseif($dt->status=='rusak')
-                    <span class="badge badge-danger">Rusak</span>
-                    @elseif($dt->status=='hilang')
-                    <span class="badge badge-warning">Hilang</span>
+                <tr>
+                    <td>{{ $e + 1 }}</td>
+                    <td>{{ $dt->kode_transaksi }}</td>
+                    <td>{{ $dt->buku->judul }}</td>
+                    <td>{{ $dt->anggota->nama }}</td>
+                    <td>{{ $dt->tgl_pinjam }}</td>
+                    @if (request('status' == 'hilang'))
+
                     @else
-                    <span class="badge badge-warning">Ditolak</span>
+                        <td>{{ $dt->tgl_kembali }}</td>
                     @endif
-                </td>
-                <td>Rp. {{number_format($dt->denda)}}</td>
 
-            </tr>
+                    <td>
+                        @if ($dt->status == 'proses')
+                            <span class="badge badge-info">Proses</span>
+                        @elseif($dt->status=='pinjam')
+                            <span class="badge badge-primary">Dipinjam</span>
+                        @elseif($dt->status=='kembali')
+                            <span class="badge badge-success">Kembali</span>
+                        @elseif($dt->status=='rusak')
+                            <span class="badge badge-danger">Rusak</span>
+                        @elseif($dt->status=='hilang')
+                            <span class="badge badge-warning">Hilang</span>
+                        @else
+                            <span class="badge badge-warning">Ditolak</span>
+                        @endif
+                    </td>
+                    <td>Rp. {{ number_format($dt->denda) }}</td>
+
+                </tr>
             @endforeach
         </tbody>
     </table>
-    <p class="right">Muaro Jambi, {{ $tgl}}</p>
+    <p class="right">Muaro Jambi, {{ $tgl }}</p>
 
     <br>
     <p class="right">Admin</p>
