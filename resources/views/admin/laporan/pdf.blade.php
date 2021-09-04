@@ -185,7 +185,7 @@
                     <td>{{ $dt->buku->judul }}</td>
                     <td>{{ $dt->anggota->nama }}</td>
                     <td>{{ $dt->tgl_pinjam }}</td>
-                    @if (request('status' == 'hilang'))
+                    @if (request('status') == 'hilang')
 
                     @else
                         <td>{{ $dt->tgl_kembali }}</td>
