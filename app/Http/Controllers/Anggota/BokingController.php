@@ -38,7 +38,7 @@ class BokingController extends Controller
         $buku = Buku::where('jml_buku', '>', 0)->get();
 
         $data = Transaksi::where('anggota_id', Session::get('id'))->orderBy('id', 'DESC')->get();
-        $title = 'Transaksi Peminjaman';
+        $title = 'Peminjaman';
         return view('anggota.transaksi.index', compact('title', 'data', 'anggota', 'buku', 'kode'));
     }
 

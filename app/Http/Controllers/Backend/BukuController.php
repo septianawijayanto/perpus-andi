@@ -7,6 +7,7 @@ use App\Exports\BukuExport;
 use App\Http\Controllers\Controller;
 use App\Imports\BukuImport;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -14,9 +15,10 @@ class BukuController extends Controller
 {
     public function index()
     {
+        $kode = Str::random(12);
         $data = Buku::all();
         $title = 'Data Buku';
-        return view('admin.buku.index', compact('title', 'data'));
+        return view('admin.buku.index', compact('title', 'data', 'kode'));
     }
     public function create(Request $request)
     {

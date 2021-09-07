@@ -3,7 +3,7 @@
         <!-- Brand -->
         <div class="sidenav-header  align-items-center">
             <a class="navbar-brand" href="javascript:void(0)">
-                <img src="{{asset('gambar')}}/logo.png" class="navbar-brand-img" alt="...">
+                <img src="{{ asset('gambar') }}/logo.png" class="navbar-brand-img" alt="...">
             </a>
         </div>
         <div class="navbar-inner">
@@ -12,7 +12,7 @@
                 <!-- Nav items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{route('adashboard')}}">
+                        <a class="nav-link active" href="{{ route('adashboard') }}">
                             <i class="ni ni-tv-2 text-primary"></i>
                             <span class="nav-link-text">Dashboard</span>
                         </a>
@@ -25,7 +25,7 @@
 
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{route('abuku')}}">
+                        <a class="nav-link active" href="{{ route('abuku') }}">
                             <i class="ni ni-book-bookmark text-info"></i>
                             <span class="nav-link-text">Buku</span>
                         </a>
@@ -38,9 +38,9 @@
                 </h6>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{route('atransaksi')}}">
+                        <a class="nav-link active" href="{{ route('atransaksi') }}">
                             <i class="ni ni-bullet-list-67 text-primary"></i>
-                            <span class="nav-link-text">Transaksi</span>
+                            <span class="nav-link-text">Peminjaman</span>
                         </a>
                     </li>
                 </ul>
@@ -48,7 +48,7 @@
                 <hr class="my-3">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url('keluar')}}">
+                        <a class="nav-link active" href="{{ url('keluar') }}">
                             <i class="ni ni-user-run text-red"></i>
                             <span class="nav-link-text">Logout</span>
                         </a>

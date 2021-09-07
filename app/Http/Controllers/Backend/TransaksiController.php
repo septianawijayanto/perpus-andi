@@ -40,7 +40,7 @@ class TransaksiController extends Controller
         $buku = Buku::where('jml_buku', '>', 0)->get();
 
         $data = Transaksi::orderBy('id', 'DESC')->get();
-        $title = 'Transaksi Peminjaman';
+        $title = 'Peminjaman';
         return view('admin.peminjaman.index', compact('title', 'data', 'anggota', 'buku', 'kode'));
     }
     public function create(Request $request)
